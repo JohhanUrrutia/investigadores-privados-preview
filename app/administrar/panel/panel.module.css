@@ -1,0 +1,155 @@
+.shell {
+  min-height: 100vh;
+  background: #f2f1ef;
+  color: #14202a;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  overflow-y: auto;
+  z-index: 10;
+  background: var(--color-navy);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 18px;
+}
+
+.logo {
+  display: block;
+  height: auto;
+  width: 168px;
+  margin-bottom: 26px;
+  padding: 0 10px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+}
+
+.linkActive {
+  background: var(--color-black);
+  color: var(--color-gold);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--color-gold);
+  color: var(--color-black);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.footerLinks a,
+.footerLinks button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.65);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.footerLinks a:hover,
+.footerLinks button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-gold);
+}
+
+.content {
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: 240px;
+  padding: 40px 44px 80px;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 28px 20px 60px;
+  }
+
+  .logo {
+    width: 150px;
+    margin-bottom: 4px;
+  }
+
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .spacer {
+    display: none;
+  }
+
+  .footerLinks {
+    flex-direction: row;
+    border-top: none;
+    padding-top: 0;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .sidebar {
+    justify-content: center;
+  }
+
+  .footerLinks {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+}

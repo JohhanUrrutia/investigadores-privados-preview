@@ -1,0 +1,300 @@
+.contact {
+  background: var(--color-black);
+  padding: 88px 0;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* -------- Formulario -------- */
+.form {
+  position: relative;
+  border: var(--border-thin);
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: linear-gradient(160deg, var(--color-navy) 0%, var(--color-black) 78%);
+}
+
+.formCorner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-gold);
+}
+
+.formCorner[data-pos="tl"] {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.formCorner[data-pos="br"] {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.formTitle {
+  font-size: clamp(22px, 3vw, 30px);
+  margin-top: 10px;
+}
+
+.formLead {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 52ch;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+@media (min-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.field input,
+.field select,
+.field textarea {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--color-white);
+  padding: 13px 16px;
+  font-size: 14px;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.field select {
+  border-radius: 999px;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.field select option {
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+.error {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-gold-light);
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--color-gold);
+  color: var(--color-black);
+  border: 1px solid var(--color-gold);
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--color-gold-dark);
+  border-color: var(--color-gold-dark);
+  transform: translateY(-3px);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.submit svg {
+  transition: transform 0.2s var(--ease);
+}
+
+.submit:hover:not(:disabled) svg {
+  transform: translateX(4px);
+}
+
+.success {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 22px 0 4px;
+}
+
+.success svg {
+  color: var(--color-gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.success strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.success p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.sendAnother {
+  margin-left: auto;
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 2px;
+  flex-shrink: 0;
+}
+
+/* -------- Tarjetas de contacto directo -------- */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--color-navy-light);
+  border: 1px solid var(--color-navy-light);
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--color-black);
+  padding: 32px 28px;
+  transition: background 0.22s var(--ease);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card svg:first-child {
+  color: var(--color-gold);
+}
+
+.card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.cardLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.cardValue {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.cardArrow {
+  color: var(--color-white);
+  transition: transform 0.22s var(--ease), color 0.22s var(--ease);
+}
+
+.card:hover {
+  background: var(--color-navy);
+}
+
+.card:hover .cardArrow {
+  color: var(--color-gold);
+  transform: translate(4px, -4px);
+}
+
+@media (min-width: 720px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 48px;
+  }
+
+  .form {
+    flex: 1 1 58%;
+  }
+
+  .cards {
+    flex: 1 1 38%;
+    grid-template-columns: 1fr;
+    align-self: stretch;
+  }
+}

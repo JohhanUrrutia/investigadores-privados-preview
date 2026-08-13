@@ -1,0 +1,41 @@
+.header {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(155deg, var(--color-navy) 0%, var(--color-black) 72%);
+  border-bottom: var(--border-thin);
+  padding: calc(var(--header-h) + 44px) 0 48px;
+}
+
+.header > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  margin-top: 16px;
+  font-size: clamp(30px, 6vw, 52px);
+  max-width: 18ch;
+}
+
+.description {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-white);
+  max-width: 60ch;
+}
+
+.rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-gold) 20%,
+    var(--color-gold) 80%,
+    transparent
+  );
+}

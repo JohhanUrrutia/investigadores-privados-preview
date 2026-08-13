@@ -1,0 +1,137 @@
+.wrap {
+  min-height: 100vh;
+  padding: 40px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-navy);
+  background-image: radial-gradient(
+    circle at 15% 10%,
+    rgba(198, 144, 36, 0.14),
+    transparent 45%
+  );
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  background: var(--color-white);
+  padding: 44px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-gold);
+}
+
+.corner[data-pos="tl"] {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner[data-pos="br"] {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.logo {
+  width: 190px;
+  height: auto;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 30px;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.field input {
+  border: 1.5px solid #d8d8d8;
+  border-radius: 10px;
+  padding: 13px 16px;
+  background: var(--color-white);
+  color: var(--color-black);
+  transition: border-color 0.2s var(--ease);
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.error {
+  color: #a6791d;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.submit {
+  margin-top: 8px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--color-gold);
+  color: var(--color-black);
+  border: 1px solid var(--color-gold);
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--color-gold-dark);
+  transform: translateY(-2px);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 24px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.back:hover {
+  color: var(--color-navy);
+}

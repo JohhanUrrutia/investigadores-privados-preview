@@ -1,0 +1,96 @@
+.about {
+  background: var(--color-navy);
+  padding: 88px 0;
+  border-bottom: var(--border-thin);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 640px;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-white);
+}
+
+.pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: var(--border-thin);
+}
+
+.pillars li {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 28px 0 28px 18px;
+  border-bottom: var(--border-thin);
+  transition: padding-left 0.25s var(--ease);
+}
+
+.pillars li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--color-gold);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.3s var(--ease);
+}
+
+.pillars li:hover {
+  padding-left: 26px;
+}
+
+.pillars li:hover::before {
+  transform: scaleY(1);
+}
+
+.n {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-gold);
+  letter-spacing: 0.06em;
+  padding-top: 2px;
+}
+
+.pillars h3 {
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+
+.pillars p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-white);
+  max-width: 46ch;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 64px;
+  }
+
+  .pillars {
+    flex: 1 1 46%;
+  }
+}

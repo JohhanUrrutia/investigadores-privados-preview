@@ -1,0 +1,340 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--color-black);
+  padding: var(--header-h) 0 0;
+  display: flex;
+  align-items: center;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(10, 20, 38, 0.58) 45%,
+    rgba(0, 0, 0, 0.82) 100%
+  );
+}
+
+/* -------- Efecto "escáner": línea dorada que recorre el header como si
+   estuviera examinando la escena, en línea con el mundo de la vigilancia
+   e investigación. No es sombra ni brillo: es una barrida de opacidad. -------- */
+.scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(198, 144, 36, 0.16) 45%,
+    rgba(198, 144, 36, 0.32) 50%,
+    rgba(198, 144, 36, 0.16) 55%,
+    transparent 100%
+  );
+  animation: scan-sweep 9s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+@keyframes scan-sweep {
+  0% {
+    top: -140px;
+  }
+  50% {
+    top: 100%;
+  }
+  100% {
+    top: -140px;
+  }
+}
+
+.inner {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-bottom: 64px;
+}
+
+.frame {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(3px);
+  overflow: hidden;
+}
+
+.corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-gold);
+  transition: width 0.3s var(--ease), height 0.3s var(--ease);
+}
+
+.frame:hover .corner {
+  width: 26px;
+  height: 26px;
+}
+
+.corner[data-pos="tl"] {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner[data-pos="tr"] {
+  top: -2px;
+  right: -2px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.corner[data-pos="bl"] {
+  bottom: -2px;
+  left: -2px;
+  border-right: none;
+  border-top: none;
+}
+
+.corner[data-pos="br"] {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.watermark {
+  position: absolute;
+  right: -30px;
+  bottom: -40px;
+  width: 260px;
+  height: auto;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.messages {
+  position: relative;
+  min-height: 210px;
+  z-index: 1;
+}
+
+.copy {
+  position: absolute;
+  inset: 0;
+  max-width: 680px;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: opacity 0.5s ease, clip-path 0.6s var(--ease);
+  pointer-events: none;
+}
+
+.copyActive {
+  position: relative;
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  pointer-events: auto;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  background: var(--color-gold);
+}
+
+.title {
+  color: var(--color-white);
+  font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+  line-height: 1.14;
+  margin-bottom: 18px;
+  max-width: 22ch;
+}
+
+.lead {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 1.02rem;
+  max-width: 540px;
+  line-height: 1.6;
+}
+
+.ctas {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease),
+    border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.primaryCta {
+  background: var(--color-gold);
+  color: var(--color-black);
+  border: 1px solid var(--color-gold);
+}
+
+.primaryCta:hover {
+  background: var(--color-gold-dark);
+  border-color: var(--color-gold-dark);
+  transform: translateY(-3px);
+}
+
+.secondaryCta {
+  background: transparent;
+  color: var(--color-white);
+  border: 1px solid var(--color-white);
+}
+
+.secondaryCta:hover {
+  background: var(--color-white);
+  color: var(--color-black);
+  transform: translateY(-3px);
+}
+
+.primaryCta svg,
+.secondaryCta svg {
+  transition: transform 0.2s var(--ease);
+}
+
+.primaryCta:hover svg {
+  transform: translateX(4px);
+}
+
+.dots {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.dot {
+  width: 26px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.2s var(--ease), width 0.2s var(--ease);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.dotActive {
+  background: var(--color-gold);
+  width: 40px;
+}
+
+.features {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.features li {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--color-white);
+}
+
+.features li svg {
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.features h3 {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.features p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (min-width: 700px) {
+  .frame {
+    padding: 56px 48px;
+  }
+}
+
+@media (min-width: 900px) {
+  .inner {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 40px;
+  }
+
+  .frame {
+    flex: 1 1 62%;
+  }
+
+  .features {
+    flex: 1 1 34%;
+    align-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanline {
+    animation: none;
+    display: none;
+  }
+}
