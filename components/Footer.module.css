@@ -7,14 +7,15 @@
 .top {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 40px;
-  padding: 56px 0 40px;
+  align-items: start;
+  gap: 48px;
+  padding: 80px 0 64px;
 }
 
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   max-width: 380px;
 }
 
@@ -29,8 +30,9 @@
 
 .tag {
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--color-white);
+  max-width: 34ch;
 }
 
 .navTitle {
@@ -40,13 +42,13 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-gold);
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .nav ul {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .nav a {
@@ -63,7 +65,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 16px;
 }
 
 .contactLink {
@@ -86,8 +88,8 @@
 
 .adminLink {
   display: inline-block;
-  margin-top: 14px;
-  padding-top: 14px;
+  margin-top: 8px;
+  padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   width: fit-content;
   font-size: 12px;
@@ -104,13 +106,14 @@
 
 .bottom {
   border-top: var(--border-thin);
-  padding: 20px 0;
+  padding: 26px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   font-size: 12px;
+  line-height: 1.6;
   letter-spacing: 0.03em;
   color: rgba(255, 255, 255, 0.6);
 }
