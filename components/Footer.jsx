@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { LinkedInIcon, PhoneIcon } from "./icons/Icons";
+import { LinkedInIcon, PhoneIcon, LockIcon } from "./icons/Icons";
+import FooterKeys from "./FooterKeys";
 import styles from "./Footer.module.css";
 
 const PHONE_DISPLAY = "+56 9 7644 7389";
@@ -23,7 +24,7 @@ export default function Footer() {
         <div className={styles.brand}>
           <Link href="/" className={styles.logo}>
             <Image
-              src="/logos/logo-ipc-white.svg"
+              src="/logos/logo-ipc-golden.svg"
               alt="Investigadores Privados Chile"
               width={210}
               height={46}
@@ -31,8 +32,12 @@ export default function Footer() {
             />
           </Link>
           <p className={styles.tag}>
-            Gestión y búsqueda de información y evidencias en todo Chile y el
-            extranjero.
+            Búsqueda de información y evidencias en Santiago de Chile, regiones
+            y el extranjero.
+          </p>
+          <p className={styles.confidential}>
+            <LockIcon width={16} height={16} />
+            Todo contacto y contratación es 100% confidencial.
           </p>
         </div>
 
@@ -62,15 +67,12 @@ export default function Footer() {
             <LinkedInIcon width={16} height={16} />
             LinkedIn
           </a>
-
-          <Link href="/administrar" className={styles.adminLink}>
-            Administrar
-          </Link>
         </div>
       </div>
 
       <div className={`container ${styles.bottom}`}>
         <span>© {year} Investigadores Privados Chile. Todos los derechos reservados.</span>
+        <FooterKeys note="Servicio confidencial · Cobertura en todo Chile y el extranjero" />
       </div>
     </footer>
   );

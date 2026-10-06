@@ -169,3 +169,112 @@ export function ShieldIcon(props) {
     </svg>
   );
 }
+
+export function SearchDocIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M13.5 20.5H6a1.5 1.5 0 0 1-1.5-1.5V5A1.5 1.5 0 0 1 6 3.5h7.5l4 4V10" />
+      <path d="M13.5 3.5v4h4" />
+      <line x1="7.5" y1="10" x2="12" y2="10" />
+      <line x1="7.5" y1="13.5" x2="10.5" y2="13.5" />
+      <circle cx="16" cy="16" r="3" />
+      <line x1="18.2" y1="18.2" x2="20.5" y2="20.5" />
+    </svg>
+  );
+}
+
+export function HeartIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 19.5s-7.5-4.4-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.6-7.5 10-7.5 10Z" />
+      <path d="M12 7l-1.2 3.2 2.4 1.6-1.2 3.2" />
+    </svg>
+  );
+}
+
+export function HomeMailIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M3.5 11 12 4l8.5 7" />
+      <path d="M5.5 9.5v10h13v-10" />
+      <rect x="8.5" y="12.5" width="7" height="5" rx="0.5" />
+      <path d="M8.5 13l3.5 2.5 3.5-2.5" />
+    </svg>
+  );
+}
+
+export function AlertIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 3.5 21 19.5H3L12 3.5Z" />
+      <line x1="12" y1="10" x2="12" y2="14" />
+      <circle cx="12" cy="16.8" r="0.4" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function CalendarIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3.5" y="5" width="17" height="15.5" rx="1.5" />
+      <line x1="3.5" y1="9.5" x2="20.5" y2="9.5" />
+      <line x1="8" y1="3" x2="8" y2="6.5" />
+      <line x1="16" y1="3" x2="16" y2="6.5" />
+      <line x1="9.5" y1="13" x2="14.5" y2="18" />
+      <line x1="14.5" y1="13" x2="9.5" y2="18" />
+    </svg>
+  );
+}
+
+export function BriefcaseIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3.5" y="7.5" width="17" height="12" rx="1.5" />
+      <path d="M9 7.5V5.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+      <line x1="3.5" y1="12.5" x2="20.5" y2="12.5" />
+      <line x1="12" y1="11.5" x2="12" y2="13.5" />
+    </svg>
+  );
+}
+
+export function ClipboardCheckIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="5" y="4.5" width="14" height="16" rx="1.5" />
+      <rect x="9" y="3" width="6" height="3" rx="0.8" />
+      <path d="M8.8 13l2.2 2.2 4.2-4.7" />
+    </svg>
+  );
+}
+
+export function ScrollIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M7 3.5h11.5v14a3 3 0 0 1-3 3H7" />
+      <path d="M7 3.5a2.5 2.5 0 0 0-2.5 2.5v1.5H7" />
+      <path d="M7 3.5v14a3 3 0 0 0 3 3" />
+      <circle cx="12.8" cy="10.5" r="2.3" />
+      <line x1="10.5" y1="16" x2="15.5" y2="16" />
+    </svg>
+  );
+}
+
+export function LockIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="5" y="10.5" width="14" height="10" rx="1.5" />
+      <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
+      <line x1="12" y1="14.5" x2="12" y2="16.5" />
+    </svg>
+  );
+}
+
+export function GlobeIcon(props) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="12" cy="12" r="8.5" />
+      <line x1="3.5" y1="12" x2="20.5" y2="12" />
+      <path d="M12 3.5c2.3 2.4 3.5 5.2 3.5 8.5s-1.2 6.1-3.5 8.5c-2.3-2.4-3.5-5.2-3.5-8.5S9.7 5.9 12 3.5Z" />
+    </svg>
+  );
+}

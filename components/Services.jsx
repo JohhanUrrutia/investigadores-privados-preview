@@ -1,81 +1,87 @@
-import {
-  SurveillanceIcon,
-  VehicleIcon,
-  CameraIcon,
-  FamilyIcon,
-  JudicialIcon,
-  NetworkIcon,
-  DnaIcon,
-  SealIcon,
-  LinkIcon,
-  ShieldIcon,
-} from "./icons/Icons";
+import * as Icons from "./icons/Icons";
 import ServiceCard from "./ServiceCard";
+import ConfidentialNote from "./ConfidentialNote";
+import { MAIN_SERVICE, FEATURED_SERVICES, OTHER_SERVICES } from "@/lib/services";
 import styles from "./Services.module.css";
 
-const SERVICES = [
-  {
-    icon: SurveillanceIcon,
-    title: "Vigilancias especiales",
-    text: "Observación de conductas de personas en vehículos y a pie, siempre desde lugares públicos.",
-  },
-  {
-    icon: VehicleIcon,
-    title: "Búsqueda de vehículos",
-    text: "Localización y apoyo en la incautación de vehículos, camiones y maquinaria en todo Chile.",
-  },
-  {
-    icon: CameraIcon,
-    title: "Levantamiento de evidencias",
-    text: "Registro fotográfico y en video que respalda cada investigación.",
-  },
-  {
-    icon: FamilyIcon,
-    title: "Localización de personas",
-    text: "Búsqueda de personas orientada a reencuentros familiares.",
-  },
-  {
-    icon: JudicialIcon,
-    title: "Apoyo a receptores judiciales",
-    text: "Búsqueda de domicilios actualizados de deudores, pensión de alimentos y notificaciones, con o sin orden pendiente.",
-  },
-  {
-    icon: NetworkIcon,
-    title: "Seguimiento de redes sociales",
-    text: "Investigación informática y monitoreo de actividad en redes sociales.",
-  },
-  {
-    icon: DnaIcon,
-    title: "ADN por paternidad",
-    text: "Coordinación de exámenes de ADN para determinar paternidad.",
-  },
-  {
-    icon: SealIcon,
-    title: "Detección de falsificaciones",
-    text: "Verificación de documentos y elementos para detectar falsificaciones.",
-  },
-  {
-    icon: LinkIcon,
-    title: "Amistades furtivas",
-    text: "Investigación de vínculos y contactos en redes sociales.",
-  },
-  {
-    icon: ShieldIcon,
-    title: "Control de pérdidas",
-    text: "Detección de infiltración de personal dentro de empresas.",
-  },
-];
+const pad = (n) => String(n).padStart(2, "0");
 
 export default function Services() {
+  const MainIcon = Icons[MAIN_SERVICE.icon];
+
   return (
     <section id="servicios" className={styles.services}>
       <div className="container">
-        <div className={styles.grid}>
-          {SERVICES.map((service, i) => (
+        {/* ---------------- Servicios destacados ---------------- */}
+        <div className={styles.head}>
+          <p className="eyebrow">Servicios destacados</p>
+          <h2 className={styles.title}>Nuestros servicios principales</h2>
+          <p className={styles.lead}>
+            Las áreas en que más nos consultan particulares, empresas, abogados y
+            receptores judiciales, con cobertura en todo Chile y el extranjero.
+          </p>
+        </div>
+
+        <div className={styles.featuredGrid}>
+          <article className={styles.mainCard}>
+            <span className={styles.badge}>Servicio principal</span>
+            <div className={styles.mainTop}>
+              <span className={styles.mainIcon}>
+                <MainIcon width={34} height={34} />
+              </span>
+              <h3 className={styles.mainTitle}>{MAIN_SERVICE.title}</h3>
+            </div>
+            <p className={styles.mainText}>{MAIN_SERVICE.text}</p>
+
+            <div className={styles.mainMeta}>
+              <div>
+                <span className={styles.metaLabel}>Conductas</span>
+                <ul className={styles.chips}>
+                  {MAIN_SERVICE.areas.map((a) => (
+                    <li key={a}>{a}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <span className={styles.metaLabel}>Cobertura</span>
+                <ul className={styles.chips}>
+                  {MAIN_SERVICE.places.map((p) => (
+                    <li key={p}>
+                      <Icons.LocationIcon width={14} height={14} />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          {FEATURED_SERVICES.map((service, i) => (
             <ServiceCard
               key={service.title}
-              number={String(i + 1).padStart(2, "0")}
-              icon={service.icon}
+              featured
+              number={pad(i + 2)}
+              icon={Icons[service.icon]}
+              title={service.title}
+              text={service.text}
+            />
+          ))}
+        </div>
+
+        <ConfidentialNote />
+
+        {/* ---------------- Otras áreas ---------------- */}
+        <div className={`${styles.head} ${styles.headOther}`}>
+          <p className="eyebrow">Otras áreas</p>
+          <h2 className={styles.titleSmall}>Más servicios de investigación</h2>
+        </div>
+
+        <div className={styles.grid}>
+          {OTHER_SERVICES.map((service, i) => (
+            <ServiceCard
+              key={service.title}
+              number={pad(FEATURED_SERVICES.length + i + 2)}
+              icon={Icons[service.icon]}
               title={service.title}
               text={service.text}
             />

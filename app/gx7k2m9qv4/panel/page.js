@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./dashboard.module.css";
 import { getSubmissions } from "@/lib/submissionsStore";
+import { ADMIN_FORMS } from "@/lib/adminConfig";
 
 export default function PanelDashboardPage() {
   const [stats, setStats] = useState({ total: 0, unread: 0, read: 0 });
@@ -50,7 +51,7 @@ export default function PanelDashboardPage() {
       </div>
 
       <div className={styles.actions}>
-        <Link href="/administrar/panel/formularios" className={styles.primaryBtn}>
+        <Link href={ADMIN_FORMS} className={styles.primaryBtn}>
           Ver formularios
         </Link>
         <Link href="/contacto" className={styles.outlineBtn}>

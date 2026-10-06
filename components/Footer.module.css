@@ -4,19 +4,24 @@
   margin-top: auto;
 }
 
-.top {
+/* Importante: .top y .bottom también llevan la clase global .container
+   (padding: 0 var(--gutter)). Como globals.css se carga después de los
+   módulos, esa regla anulaba el padding vertical del footer. Por eso se usa
+   ".footer .top" (más específico) y solo padding-block, para conservar el
+   margen lateral del contenedor. */
+.footer .top {
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
-  gap: 48px;
-  padding: 80px 0 64px;
+  gap: 44px;
+  padding-block: 72px 56px;
 }
 
 .brand {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 380px;
+  max-width: 420px;
 }
 
 .logo {
@@ -32,7 +37,25 @@
   font-size: 14px;
   line-height: 1.7;
   color: var(--color-white);
-  max-width: 34ch;
+  max-width: 38ch;
+}
+
+.confidential {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 10px 14px;
+  border: 1px solid var(--color-gold);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-gold-light);
+}
+
+.confidential svg {
+  flex-shrink: 0;
+  color: var(--color-gold);
 }
 
 .navTitle {
@@ -52,6 +75,8 @@
 }
 
 .nav a {
+  display: inline-block;
+  padding-block: 2px;
   font-size: 14px;
   color: var(--color-white);
   transition: color 0.2s var(--ease);
@@ -72,6 +97,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  padding-block: 2px;
   font-size: 14px;
   color: var(--color-white);
   width: fit-content;
@@ -86,42 +112,41 @@
   color: var(--color-gold);
 }
 
-.adminLink {
-  display: inline-block;
-  margin-top: 8px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  width: fit-content;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
-  transition: color 0.2s var(--ease);
-}
-
-.adminLink:hover {
-  color: var(--color-gold);
-}
-
-.bottom {
-  border-top: var(--border-thin);
-  padding: 26px 0;
+/* La línea divisoria va en un borde que respeta el gutter: se dibuja con
+   un pseudo-elemento a todo el ancho del contenedor de contenido. */
+.footer .bottom {
+  position: relative;
+  padding-block: 28px 32px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 12px;
   line-height: 1.6;
   letter-spacing: 0.03em;
   color: rgba(255, 255, 255, 0.6);
 }
 
+.bottom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  height: 1px;
+  background: var(--color-navy-light);
+}
+
+.bottomNote {
+  color: rgba(255, 255, 255, 0.45);
+}
+
 @media (min-width: 640px) {
-  .top {
+  .footer .top {
     grid-template-columns: 1fr 1fr;
-    column-gap: 32px;
+    column-gap: 40px;
+    row-gap: 48px;
+    padding-block: 88px 64px;
   }
 
   .brand {
@@ -130,12 +155,21 @@
 }
 
 @media (min-width: 900px) {
-  .top {
+  .footer .top {
     grid-template-columns: 1.5fr 0.9fr 1fr;
     column-gap: 56px;
+    padding-block: 96px 72px;
   }
 
   .brand {
     grid-column: auto;
+  }
+
+  .footer .bottom {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px 24px;
   }
 }

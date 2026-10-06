@@ -3,6 +3,135 @@
   padding: 88px 0;
 }
 
+/* -------- Encabezados de bloque -------- */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 680px;
+  margin-bottom: 40px;
+}
+
+.headOther {
+  margin-top: 88px;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: clamp(26px, 4.5vw, 40px);
+}
+
+.titleSmall {
+  font-size: clamp(22px, 3.4vw, 30px);
+}
+
+.lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-white);
+}
+
+/* -------- Grilla de servicios destacados -------- */
+.featuredGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--color-gold);
+  border: 1px solid var(--color-gold);
+}
+
+/* Tarjeta del servicio principal */
+.mainCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 40px 24px 36px;
+  background: linear-gradient(150deg, var(--color-navy) 0%, #0d1d33 60%, var(--color-black) 100%);
+}
+
+.badge {
+  align-self: flex-start;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-black);
+  background: var(--color-gold);
+}
+
+.mainTop {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.mainIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+}
+
+.mainTitle {
+  font-size: clamp(22px, 3.2vw, 32px);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+.mainText {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-white);
+  max-width: 62ch;
+}
+
+.mainMeta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.metaLabel {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--color-white);
+}
+
+.chips li svg {
+  color: var(--color-gold);
+}
+
+/* -------- Grilla de otras áreas -------- */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -12,13 +141,45 @@
 }
 
 @media (min-width: 640px) {
+  .featuredGrid,
   .grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mainCard {
+    grid-column: 1 / -1;
+    padding: 48px 40px 44px;
+  }
+
+  .mainMeta {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* Si queda una tarjeta sola en la última fila, ocupa todo el ancho para
+     no dejar un hueco vacío en la grilla. */
+  .grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 
 @media (min-width: 1024px) {
+  .featuredGrid,
   .grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* El principal ocupa 2 de 3 columnas: con 10 destacados la grilla
+     queda completa (2 + 10 = 12 celdas = 4 filas). */
+  .mainCard {
+    grid-column: span 2;
+  }
+
+  .grid > :last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .grid > :last-child:nth-child(3n + 1) {
+    grid-column: 1 / -1;
   }
 }

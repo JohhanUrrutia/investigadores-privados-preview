@@ -44,7 +44,7 @@
 .tickerMarquee {
   display: flex;
   width: max-content;
-  animation: ticker-scroll 34s linear infinite;
+  animation: ticker-scroll 50s linear infinite;
 }
 
 .header .tickerMarquee:hover {
@@ -120,8 +120,14 @@
   color: var(--color-gold);
 }
 
-.topbarLocation {
+.topbarRight {
   margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbarLocation {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -286,6 +292,24 @@
 @media (max-width: 480px) {
   .logoImg {
     width: 156px;
+  }
+}
+
+/* Indicador de formularios sin leer en móvil (la barra superior se oculta
+   bajo 560px, así que ahí se muestra junto al botón de menú). */
+.mobileIndicator {
+  display: none !important;
+}
+
+@media (max-width: 560px) {
+  .mobileIndicator {
+    display: inline-flex !important;
+    margin-left: auto;
+    margin-right: -22px;
+  }
+
+  .mobileIndicator + .toggle {
+    margin-left: 0;
   }
 }
 

@@ -2,10 +2,6 @@ import styles from "./ParticularServices.module.css";
 
 const PARTICULAR_SERVICES = [
   {
-    title: "Infidelidades",
-    text: "Seguimiento discreto ante sospechas de infidelidad de pareja.",
-  },
-  {
     title: "Conductas dubitativas",
     text: "Observación de comportamientos sospechosos para esclarecer situaciones de desconfianza.",
   },
@@ -22,16 +18,8 @@ const PARTICULAR_SERVICES = [
     text: "Coordinación de exámenes de ADN para determinar paternidad.",
   },
   {
-    title: "Investigación de herencias",
-    text: "Búsqueda de herederos y antecedentes vinculados a un proceso hereditario.",
-  },
-  {
     title: "Consumo de alcohol y drogas",
     text: "Verificación discreta de posibles consumos problemáticos.",
-  },
-  {
-    title: "Ubicación de personas",
-    text: "Localización de personas para fines particulares y familiares.",
   },
   {
     title: "Determinación de patrimonios",
@@ -51,8 +39,8 @@ export default function ParticularServices() {
           <p className="eyebrow">Servicios particulares</p>
           <h2 className={styles.title}>Investigación para necesidades personales</h2>
           <p className={styles.lead}>
-            Además de nuestras áreas de trabajo con empresas y receptores judiciales,
-            atendemos casos particulares con la misma reserva y rigor profesional.
+            Además de los servicios destacados, atendemos casos particulares y
+            familiares con la misma reserva y rigor profesional.
           </p>
         </div>
 

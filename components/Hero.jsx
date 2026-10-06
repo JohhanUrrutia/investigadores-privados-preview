@@ -1,18 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { LocationIcon, ShieldIcon, CameraIcon, ArrowIcon } from "./icons/Icons";
+import {
+  LocationIcon,
+  ShieldIcon,
+  CameraIcon,
+  ArrowIcon,
+  LockIcon,
+} from "./icons/Icons";
 import styles from "./Hero.module.css";
 
 // Mensajes rotativos del header, uno por cada frente de trabajo de la
-// agencia (ver components/Services.jsx y ParticularServices.jsx).
+// agencia (ver lib/services.js).
 const MESSAGES = [
   {
     eyebrow: "Agencia de investigación privada",
-    title: "Búsqueda de información y evidencias en todo Chile y el extranjero.",
-    text: "Somos especialistas en la gestión y búsqueda de información, con apoyo directo en Santiago y en las principales regiones del país.",
+    title:
+      "Búsqueda de información y evidencias en todo Chile y el extranjero.",
+    text: "Información y evidencias sobre conductas familiares, personales, laborales y comerciales, en Santiago de Chile, regiones y el extranjero.",
   },
   {
     eyebrow: "Vigilancias especiales",
@@ -20,9 +26,9 @@ const MESSAGES = [
     text: "Vigilancia discreta de personas y vehículos, realizada exclusivamente desde lugares públicos.",
   },
   {
-    eyebrow: "Búsqueda de vehículos y bienes",
-    title: "Localizamos lo que otros no encuentran.",
-    text: "Apoyo en la ubicación e incautación de vehículos, camiones, maquinaria y bienes en todo el territorio nacional.",
+    eyebrow: "Empresas y particulares",
+    title: "Fraudes, ausentismo laboral y competencia desleal.",
+    text: "Investigaciones corporativas, due diligence, herencias nacionales e internacionales y localización de personas y domicilios.",
   },
   {
     eyebrow: "Evidencia verificable",
@@ -31,10 +37,27 @@ const MESSAGES = [
   },
   {
     eyebrow: "Reserva y confidencialidad",
-    title: "Su caso, tratado con máxima discreción.",
-    text: "Apoyo a receptores judiciales, empresas y particulares bajo un manejo estrictamente reservado de la información.",
+    title: "Todo contacto y contratación es 100% confidencial.",
+    text: "Su identidad y la información de su caso se manejan bajo estricta reserva, desde la primera consulta hasta el informe final.",
   },
 ];
+
+// Etiquetas que acompañan cada toma del video (cambia de escena
+// aproximadamente cada 1 segundo). Solo se superponen como texto: el
+// archivo de video no se modifica.
+const SCENES = [
+  "Vigilancia desde vehículo",
+  "Seguimiento de vehículo",
+  "Levantamiento de evidencia",
+  "Verificación de domicilio",
+  "Notificación",
+  "Análisis de redes sociales",
+  "Coordinación ADN",
+  "Análisis documental",
+  "Vigilancia nocturna",
+  "Control de pérdidas",
+];
+const SCENE_SECONDS = 1;
 
 const FEATURES = [
   {
@@ -45,7 +68,7 @@ const FEATURES = [
   {
     icon: ShieldIcon,
     title: "Confidencialidad",
-    text: "Manejo reservado de cada investigación.",
+    text: "Todo contacto y contratación es estrictamente confidencial.",
   },
   {
     icon: CameraIcon,
@@ -56,9 +79,15 @@ const FEATURES = [
 
 const AUTOPLAY_MS = 5500;
 
+const two = (n) => String(n).padStart(2, "0");
+
 export default function Hero() {
   const [index, setIndex] = useState(0);
+  const [scene, setScene] = useState(0);
+  const [clock, setClock] = useState("--:--:--");
+  const videoRef = useRef(null);
 
+  // Rotación de mensajes
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((i) => (i + 1) % MESSAGES.length);
@@ -66,80 +95,147 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
+  // Reloj tipo cámara (se calcula en el cliente para no generar
+  // diferencias entre servidor y navegador).
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      setClock(
+        `${two(d.getHours())}:${two(d.getMinutes())}:${two(d.getSeconds())}`,
+      );
+    };
+    tick();
+    const t = setInterval(tick, 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Sincroniza la etiqueta de escena con el tiempo del video.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const onTime = () => {
+      const i = Math.min(
+        SCENES.length - 1,
+        Math.floor(v.currentTime / SCENE_SECONDS),
+      );
+      setScene((prev) => (prev === i ? prev : i));
+    };
+    v.addEventListener("timeupdate", onTime);
+    return () => v.removeEventListener("timeupdate", onTime);
+  }, []);
+
   return (
     <section id="top" className={styles.hero}>
-      <video
-        className={styles.video}
-        src="/videos/header-loop.mp4"
-        poster="/hero-poster.jpg"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        aria-hidden="true"
-      />
-      <div className={styles.overlay} />
-      <div className="grain" />
-      <div className={styles.scanline} aria-hidden="true" />
-
-      <div className={`container ${styles.inner}`}>
-        <div className={styles.frame}>
-          <span className={styles.corner} data-pos="tl" />
-          <span className={styles.corner} data-pos="tr" />
-          <span className={styles.corner} data-pos="bl" />
-          <span className={styles.corner} data-pos="br" />
-
-          <Image
-            src="/logos/logo-ipc-golden.svg"
-            alt=""
+      {/* ================= Pantalla con el video ================= */}
+      <div className={styles.stage}>
+        <div className={styles.screen}>
+          <video
+            ref={videoRef}
+            className={styles.video}
+            src="/videos/header-loop.mp4"
+            poster="/hero-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
             aria-hidden="true"
-            width={500}
-            height={110}
-            className={styles.watermark}
           />
 
-          <div className={styles.messages}>
-            {MESSAGES.map((m, i) => (
-              <div
-                key={m.title}
-                className={`${styles.copy} ${i === index ? styles.copyActive : ""}`}
-                aria-hidden={i !== index}
-              >
-                <p className={styles.eyebrow}>{m.eyebrow}</p>
-                <h1 className={styles.title}>{m.title}</h1>
-                <p className={styles.lead}>{m.text}</p>
+          {/* Solo una franja superior suave para que el menú se lea; el resto
+            del video queda limpio, sin sombreado. */}
+          <div className={styles.topFade} aria-hidden="true" />
+
+          {/* Interfaz tipo visor de cámara */}
+          <div className={styles.hud} aria-hidden="true">
+            <span className={styles.bracket} data-pos="tl" />
+            <span className={styles.bracket} data-pos="tr" />
+            <span className={styles.bracket} data-pos="bl" />
+            <span className={styles.bracket} data-pos="br" />
+
+            <div className={styles.hudTop}>
+              <span className={styles.rec}>
+                <span className={styles.recDot} />
+                REC
+              </span>
+              <span className={styles.hudMono}>{clock}</span>
+            </div>
+
+            <div className={styles.reticle}>
+              <span />
+            </div>
+
+            <div className={styles.hudBottom}>
+              <div className={styles.sceneLabel}>
+                <span className={styles.hudMono}>CAM {two(scene + 1)}</span>
+                <span key={scene} className={styles.sceneName}>
+                  {SCENES[scene]}
+                </span>
               </div>
-            ))}
-          </div>
-
-          <div className={styles.ctas}>
-            <Link href="/contacto" className={styles.primaryCta}>
-              Solicitar consulta
-              <ArrowIcon width={16} height={16} />
-            </Link>
-            <Link href="/servicios" className={styles.secondaryCta}>
-              Ver servicios
-            </Link>
-          </div>
-
-          <div className={styles.dots}>
-            {MESSAGES.map((m, i) => (
-              <button
-                key={m.title}
-                type="button"
-                className={`${styles.dot} ${i === index ? styles.dotActive : ""}`}
-                onClick={() => setIndex(i)}
-                aria-label={`Ver mensaje ${i + 1}`}
-              />
-            ))}
+              <div className={styles.sceneBar}>
+                {SCENES.map((s, i) => (
+                  <span key={s} className={i <= scene ? styles.sceneOn : ""} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        <ul className={styles.features}>
+        {/* ================= Panel de contenido ================= */}
+        <div className={`container ${styles.panelWrap}`}>
+          <div className={styles.panel}>
+            <div className={styles.messages}>
+              {MESSAGES.map((m, i) => (
+                <div
+                  key={m.title}
+                  className={`${styles.copy} ${i === index ? styles.copyActive : ""}`}
+                  aria-hidden={i !== index}
+                >
+                  <p className={styles.eyebrow}>{m.eyebrow}</p>
+                  <h1 className={styles.title}>{m.title}</h1>
+                  <p className={styles.lead}>{m.text}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.ctas}>
+              <Link href="/contacto" className={styles.primaryCta}>
+                Solicitar consulta
+                <ArrowIcon width={16} height={16} />
+              </Link>
+              <Link href="/servicios" className={styles.secondaryCta}>
+                Ver servicios
+              </Link>
+            </div>
+
+            <div className={styles.panelFoot}>
+              <p className={styles.confidential}>
+                <LockIcon width={15} height={15} />
+                Consulta y contratación 100% confidencial
+              </p>
+
+              <div className={styles.dots}>
+                {MESSAGES.map((m, i) => (
+                  <button
+                    key={m.title}
+                    type="button"
+                    className={`${styles.dot} ${i === index ? styles.dotActive : ""}`}
+                    onClick={() => setIndex(i)}
+                    aria-label={`Ver mensaje ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ================= Franja de atributos ================= */}
+      <div className={styles.strip}>
+        <ul className={`container ${styles.features}`}>
           {FEATURES.map(({ icon: Icon, title, text }) => (
             <li key={title}>
-              <Icon width={26} height={26} />
+              <Icon width={24} height={24} />
               <div>
                 <h3>{title}</h3>
                 <p>{text}</p>

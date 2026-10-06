@@ -4,12 +4,12 @@
 
 .title {
   font-size: 1.7rem;
-  color: #14202a;
+  color: var(--a-text);
 }
 
 .lead {
   margin-top: 8px;
-  color: #64707b;
+  color: var(--a-muted);
   max-width: 620px;
   line-height: 1.6;
 }
@@ -20,8 +20,9 @@
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: #64707b;
-  border: 1px dashed #cfd6db;
+  color: var(--a-muted);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
 }
 
 .list {
@@ -31,14 +32,20 @@
 }
 
 .item {
-  background: var(--color-white);
-  border: 1px solid #e1e6ea;
-  border-left: 3px solid transparent;
-  transition: border-color 0.2s var(--ease);
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--a-surface);
+  border: 1px solid var(--a-border);
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.item:hover {
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .itemUnread {
-  border-left-color: var(--color-gold);
+  background: linear-gradient(90deg, rgba(198, 144, 36, 0.1) 0%, var(--a-surface) 40%);
+  box-shadow: inset 3px 0 0 var(--color-gold);
 }
 
 .top {
@@ -55,6 +62,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .name {
@@ -62,7 +70,7 @@
   align-items: center;
   gap: 8px;
   font-weight: 700;
-  color: #14202a;
+  color: var(--a-text);
 }
 
 .dot {
@@ -74,44 +82,50 @@
 
 .email {
   font-size: 0.85rem;
-  color: #64707b;
+  color: var(--a-muted);
+  word-break: break-all;
 }
 
 .meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 14px;
+  gap: 10px 14px;
   font-size: 0.8rem;
-  color: #64707b;
+  color: var(--a-muted);
 }
 
 .service {
-  padding: 4px 12px;
+  padding: 5px 12px;
   border-radius: 999px;
-  background: #f2f1ef;
-  color: var(--color-navy);
+  background: rgba(198, 144, 36, 0.14);
+  border: 1px solid rgba(198, 144, 36, 0.4);
+  color: var(--color-gold-light);
   font-weight: 700;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
 .body {
   padding: 0 20px 22px;
-  border-top: 1px solid #e1e6ea;
+  border-top: 1px solid var(--a-border);
 }
 
 .phone {
   margin-top: 16px;
-  font-size: 0.85rem;
-  color: #14202a;
+  font-size: 0.88rem;
+  color: var(--a-text);
 }
 
 .message {
   margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.3);
   font-size: 0.92rem;
   line-height: 1.6;
-  color: #384552;
+  color: rgba(255, 255, 255, 0.88);
   white-space: pre-wrap;
 }
 
@@ -119,7 +133,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 18px;
 }
 
 .replyBtn,
@@ -128,24 +142,28 @@
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 700;
-  transition: transform 0.2s var(--ease), background 0.2s var(--ease);
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease),
+    border-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .replyBtn {
-  border: 1px solid #cfd6db;
-  color: #14202a;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--a-text);
 }
 
 .replyBtn:hover {
-  border-color: var(--color-navy);
+  border-color: var(--color-gold);
+  color: var(--color-gold);
   transform: translateY(-2px);
 }
 
 .deleteBtn {
-  background: #a42029;
+  border: none;
+  background: #b3262f;
   color: var(--color-white);
 }
 
 .deleteBtn:hover {
+  background: #8f1d25;
   transform: translateY(-2px);
 }

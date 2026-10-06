@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
+import UnreadIndicator from "./UnreadIndicator";
+import { SERVICE_NAMES as SERVICES } from "@/lib/services";
 import { MenuIcon, CloseIcon, PhoneIcon, LinkedInIcon, LocationIcon } from "./icons/Icons";
 
 const NAV_LINKS = [
@@ -13,22 +15,6 @@ const NAV_LINKS = [
   { href: "/contacto", label: "Contacto" },
 ];
 
-// Áreas de investigación que ofrece la agencia (ver components/Services.jsx
-// y components/ParticularServices.jsx).
-const SERVICES = [
-  "Vigilancias especiales",
-  "Búsqueda de vehículos",
-  "Levantamiento de evidencias",
-  "Localización de personas",
-  "Apoyo a receptores judiciales",
-  "Seguimiento de redes sociales",
-  "ADN por paternidad",
-  "Detección de falsificaciones",
-  "Amistades furtivas",
-  "Control de pérdidas",
-  "Infidelidades",
-  "Evaluaciones prenupciales",
-];
 
 const PHONE_DISPLAY = "+56 9 7644 7389";
 const PHONE_HREF = "tel:+56976447389";
@@ -99,10 +85,13 @@ export default function Navbar() {
             <LinkedInIcon width={14} height={14} />
             <span>Investigadores Privados Chile</span>
           </a>
-          <span className={styles.topbarLocation}>
-            <LocationIcon width={14} height={14} />
-            <span>Cobertura en todo Chile</span>
-          </span>
+          <div className={styles.topbarRight}>
+            <span className={styles.topbarLocation}>
+              <LocationIcon width={14} height={14} />
+              <span>Cobertura en todo Chile</span>
+            </span>
+            <UnreadIndicator />
+          </div>
         </div>
       </div>
 
@@ -110,7 +99,7 @@ export default function Navbar() {
         <nav className={`container ${styles.nav}`}>
           <Link href="/" className={styles.logo} aria-label="Investigadores Privados Chile - Inicio">
             <Image
-              src="/logos/logo-ipc-white.svg"
+              src="/logos/logo-ipc-golden.svg"
               alt="Investigadores Privados Chile"
               width={220}
               height={48.5}
@@ -139,6 +128,8 @@ export default function Navbar() {
             <PhoneIcon width={16} height={16} />
             <span>{PHONE_DISPLAY}</span>
           </a>
+
+          <UnreadIndicator className={styles.mobileIndicator} />
 
           <button
             type="button"

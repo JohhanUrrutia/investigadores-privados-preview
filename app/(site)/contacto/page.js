@@ -1,5 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import Contact from "@/components/Contact";
+import ConfidentialNote from "@/components/ConfidentialNote";
 
 export const metadata = {
   title: "Contacto",
@@ -13,8 +14,11 @@ export default function ContactoPage() {
       <PageHeader
         eyebrow="Contacto"
         title="Conversemos sobre su caso"
-        description="Escríbanos o llame directamente para coordinar una consulta reservada con nuestro equipo."
+        description="Escríbanos o llame directamente. Todo contacto y contratación de nuestros servicios es estrictamente confidencial."
       />
+      <div className="container">
+        <ConfidentialNote withCta={false} />
+      </div>
       <Contact />
     </>
   );

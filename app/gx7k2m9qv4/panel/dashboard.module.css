@@ -4,12 +4,12 @@
 
 .title {
   font-size: 1.7rem;
-  color: #14202a;
+  color: var(--a-text);
 }
 
 .lead {
   margin-top: 8px;
-  color: #64707b;
+  color: var(--a-muted);
   max-width: 620px;
   line-height: 1.6;
 }
@@ -22,29 +22,43 @@
 }
 
 .card {
-  background: var(--color-white);
-  border: 1px solid #e1e6ea;
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(160deg, var(--a-surface-2) 0%, var(--a-surface) 100%);
+  border: 1px solid var(--a-border);
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  width: 36px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: var(--color-gold);
+}
+
 .cardValue {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 800;
-  color: var(--color-navy);
+  color: var(--color-white);
 }
 
 .cardLabel {
   font-size: 0.85rem;
-  color: #64707b;
+  color: var(--a-muted);
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 14px;
 }
 
 .primaryBtn,
@@ -55,7 +69,8 @@
   border-radius: 999px;
   font-size: 0.9rem;
   font-weight: 700;
-  transition: transform 0.2s var(--ease), background 0.2s var(--ease);
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease),
+    border-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .primaryBtn {
@@ -69,12 +84,13 @@
 }
 
 .outlineBtn {
-  border: 1px solid #cfd6db;
-  color: #14202a;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--a-text);
 }
 
 .outlineBtn:hover {
-  border-color: var(--color-navy);
+  border-color: var(--color-gold);
+  color: var(--color-gold);
   transform: translateY(-2px);
 }
 

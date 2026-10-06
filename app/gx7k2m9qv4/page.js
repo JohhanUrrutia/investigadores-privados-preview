@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import styles from "./administrar.module.css";
+import styles from "./login.module.css";
 import { login, isAuthenticated } from "@/lib/adminAuth";
+import { ADMIN_PANEL } from "@/lib/adminConfig";
 
 export default function AdministrarLoginPage() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function AdministrarLoginPage() {
     isAuthenticated().then((authed) => {
       if (!active) return;
       if (authed) {
-        router.replace("/administrar/panel");
+        router.replace(ADMIN_PANEL);
         return;
       }
       setReady(true);
@@ -41,7 +42,7 @@ export default function AdministrarLoginPage() {
     const result = await login(form.user.trim(), form.pass);
     setSubmitting(false);
     if (result.ok) {
-      router.push("/administrar/panel");
+      router.push(ADMIN_PANEL);
     } else {
       setError(result.error);
     }
@@ -56,7 +57,7 @@ export default function AdministrarLoginPage() {
         <span className={styles.corner} data-pos="br" />
 
         <Image
-          src="/logos/logo-ipc-black.svg"
+          src="/logos/logo-ipc-white.svg"
           alt="Investigadores Privados Chile"
           width={210}
           height={46}

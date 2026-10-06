@@ -1,12 +1,43 @@
+/* ==========================================================================
+   Header (hero) — concepto "visor de cámara"
+   El bloque completo (menú + video + panel) mide exactamente el alto de la
+   pantalla (100svh / 100dvh), en cualquier dispositivo, sin hacer scroll.
+   El video se muestra limpio; encima solo va una interfaz fina tipo cámara
+   (REC, reloj, encuadre, etiqueta de escena) y un panel de texto acotado.
+   ========================================================================== */
+
 .hero {
   position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
-  overflow: hidden;
   background: var(--color-black);
-  padding: var(--header-h) 0 0;
+  --radius: 18px;
+  --radius-sm: 10px;
+}
+
+/* Alto = pantalla visible. svh como base segura (barra del navegador
+   desplegada en móvil) y dvh donde esté disponible. */
+.stage {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@supports (height: 100dvh) {
+  .stage {
+    height: 100dvh;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Pantalla del video (en móvil ocupa todo el espacio libre sobre el panel)
+   ------------------------------------------------------------------------- */
+.screen {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .video {
@@ -16,135 +47,237 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  background: var(--color-black);
 }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.72) 0%,
-    rgba(10, 20, 38, 0.58) 45%,
-    rgba(0, 0, 0, 0.82) 100%
-  );
-}
-
-/* -------- Efecto "escáner": línea dorada que recorre el header como si
-   estuviera examinando la escena, en línea con el mundo de la vigilancia
-   e investigación. No es sombra ni brillo: es una barrida de opacidad. -------- */
-.scanline {
+/* Franja superior suave, solo para que el menú sea legible */
+.topFade {
   position: absolute;
   left: 0;
   right: 0;
-  height: 140px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(198, 144, 36, 0.16) 45%,
-    rgba(198, 144, 36, 0.32) 50%,
-    rgba(198, 144, 36, 0.16) 55%,
-    transparent 100%
-  );
-  animation: scan-sweep 9s ease-in-out infinite;
+  top: 0;
+  height: calc(var(--header-h) + 40px);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 100%);
   pointer-events: none;
-  mix-blend-mode: screen;
 }
 
-@keyframes scan-sweep {
-  0% {
-    top: -140px;
-  }
-  50% {
-    top: 100%;
-  }
-  100% {
-    top: -140px;
+/* -------------------------------------------------------------------------
+   Interfaz de cámara (HUD)
+   ------------------------------------------------------------------------- */
+.hud {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  color: var(--color-white);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --hud-top: calc(var(--header-h) + 10px);
+  --hud-side: 10px;
+  --hud-bottom: 32px;
+}
+
+/* Esquinas de encuadre redondeadas */
+.bracket {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--color-gold);
+}
+
+.bracket[data-pos="tl"] {
+  top: var(--hud-top);
+  left: var(--hud-side);
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 12px;
+}
+
+.bracket[data-pos="tr"] {
+  top: var(--hud-top);
+  right: var(--hud-side);
+  border-left: none;
+  border-bottom: none;
+  border-top-right-radius: 12px;
+}
+
+.bracket[data-pos="bl"] {
+  bottom: var(--hud-bottom);
+  left: var(--hud-side);
+  border-right: none;
+  border-top: none;
+  border-bottom-left-radius: 12px;
+}
+
+.bracket[data-pos="br"] {
+  bottom: var(--hud-bottom);
+  right: var(--hud-side);
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 12px;
+}
+
+.hudTop {
+  position: absolute;
+  top: calc(var(--hud-top) + 10px);
+  left: calc(var(--hud-side) + 16px);
+  right: calc(var(--hud-side) + 16px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hudMono {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.rec,
+.hudTop .hudMono {
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.recDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #e53935;
+  animation: rec-blink 1.2s steps(2, start) infinite;
+}
+
+@keyframes rec-blink {
+  to {
+    visibility: hidden;
   }
 }
 
-.inner {
+/* Retícula de enfoque (solo escritorio) */
+.reticle {
+  display: none;
+}
+
+.hudBottom {
+  position: absolute;
+  left: calc(var(--hud-side) + 16px);
+  right: calc(var(--hud-side) + 16px);
+  bottom: calc(var(--hud-bottom) + 12px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.sceneLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow: inset 2px 0 0 var(--color-gold);
+}
+
+.sceneLabel .hudMono {
+  color: var(--color-gold-light);
+}
+
+.sceneName {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: scene-in 0.45s var(--ease) both;
+}
+
+@keyframes scene-in {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.sceneBar {
+  display: flex;
+  gap: 4px;
+}
+
+.sceneBar span {
+  width: 14px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+  transition: background 0.2s var(--ease);
+}
+
+.sceneBar .sceneOn {
+  background: var(--color-gold);
+}
+
+/* -------------------------------------------------------------------------
+   Panel de contenido
+   ------------------------------------------------------------------------- */
+.stage .panelWrap {
   position: relative;
   z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  padding-bottom: 64px;
+  flex: 0 0 auto;
+  /* En móvil el panel se monta levemente sobre el borde del video */
+  margin-top: -22px;
+  padding-bottom: 14px;
 }
 
-.frame {
+.panel {
   position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  padding: 40px 24px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  background: rgba(0, 0, 0, 0.34);
-  backdrop-filter: blur(3px);
+  gap: 16px;
+  padding: 22px 20px 18px;
+  border-radius: var(--radius);
+  background: #05080f;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   overflow: hidden;
 }
 
-.corner {
+/* Línea dorada superior que respeta el borde redondeado */
+.panel::before {
+  content: "";
   position: absolute;
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--color-gold);
-  transition: width 0.3s var(--ease), height 0.3s var(--ease);
-}
-
-.frame:hover .corner {
-  width: 26px;
-  height: 26px;
-}
-
-.corner[data-pos="tl"] {
-  top: -2px;
-  left: -2px;
-  border-right: none;
-  border-bottom: none;
-}
-
-.corner[data-pos="tr"] {
-  top: -2px;
-  right: -2px;
-  border-left: none;
-  border-bottom: none;
-}
-
-.corner[data-pos="bl"] {
-  bottom: -2px;
-  left: -2px;
-  border-right: none;
-  border-top: none;
-}
-
-.corner[data-pos="br"] {
-  bottom: -2px;
-  right: -2px;
-  border-left: none;
-  border-top: none;
-}
-
-.watermark {
-  position: absolute;
-  right: -30px;
-  bottom: -40px;
-  width: 260px;
-  height: auto;
-  opacity: 0.08;
-  pointer-events: none;
-  z-index: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-gold);
 }
 
 .messages {
   position: relative;
-  min-height: 210px;
-  z-index: 1;
+  display: grid;
 }
 
+/* Todos los mensajes ocupan la misma celda: el alto lo define el más
+   largo, así el panel no "salta" al rotar. */
 .copy {
-  position: absolute;
-  inset: 0;
-  max-width: 680px;
+  grid-area: 1 / 1;
   opacity: 0;
   clip-path: inset(0 100% 0 0);
   transition: opacity 0.5s ease, clip-path 0.6s var(--ease);
@@ -152,7 +285,6 @@
 }
 
 .copyActive {
-  position: relative;
   opacity: 1;
   clip-path: inset(0 0 0 0);
   pointer-events: auto;
@@ -162,53 +294,53 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-gold);
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .eyebrow::before {
   content: "";
   width: 22px;
   height: 2px;
+  border-radius: 2px;
   background: var(--color-gold);
 }
 
 .title {
   color: var(--color-white);
-  font-size: clamp(1.9rem, 4.4vw, 3.2rem);
-  line-height: 1.14;
-  margin-bottom: 18px;
-  max-width: 22ch;
+  font-size: 1.42rem;
+  line-height: 1.15;
 }
 
+/* En teléfonos el texto de apoyo se oculta para que todo quepa en una
+   pantalla; reaparece cuando hay alto suficiente. */
 .lead {
+  display: none;
+  margin-top: 12px;
   color: rgba(255, 255, 255, 0.86);
-  font-size: 1.02rem;
-  max-width: 540px;
+  font-size: 0.98rem;
   line-height: 1.6;
 }
 
 .ctas {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 8px;
+  gap: 10px;
 }
 
 .primaryCta,
 .secondaryCta {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 16px 28px;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -228,10 +360,18 @@
   transform: translateY(-3px);
 }
 
+.primaryCta svg {
+  transition: transform 0.2s var(--ease);
+}
+
+.primaryCta:hover svg {
+  transform: translateX(4px);
+}
+
 .secondaryCta {
   background: transparent;
   color: var(--color-white);
-  border: 1px solid var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
 .secondaryCta:hover {
@@ -240,26 +380,40 @@
   transform: translateY(-3px);
 }
 
-.primaryCta svg,
-.secondaryCta svg {
-  transition: transform 0.2s var(--ease);
+.panelFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 20px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-.primaryCta:hover svg {
-  transform: translateX(4px);
+.confidential {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.confidential svg {
+  flex-shrink: 0;
 }
 
 .dots {
-  position: relative;
-  z-index: 1;
   display: flex;
-  gap: 10px;
-  margin-top: 6px;
+  gap: 8px;
 }
 
 .dot {
-  width: 26px;
+  width: 22px;
   height: 4px;
+  border: none;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.3);
   transition: background 0.2s var(--ease), width 0.2s var(--ease);
@@ -271,24 +425,35 @@
 
 .dotActive {
   background: var(--color-gold);
-  width: 40px;
+  width: 36px;
 }
 
-.features {
+/* -------------------------------------------------------------------------
+   Franja de atributos (debajo del header, ya fuera de la primera pantalla)
+   ------------------------------------------------------------------------- */
+.strip {
   position: relative;
   z-index: 1;
+  background: var(--color-black);
+}
+
+.hero .features {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  padding-block: 28px 8px;
 }
 
 .features li {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   align-items: flex-start;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   color: var(--color-white);
+}
+
+.features li:last-child {
+  border-bottom: none;
 }
 
 .features li svg {
@@ -297,10 +462,10 @@
 }
 
 .features h3 {
-  font-size: 15px;
+  font-size: 14px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 6px;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
 }
 
 .features p {
@@ -309,32 +474,296 @@
   color: rgba(255, 255, 255, 0.78);
 }
 
-@media (min-width: 700px) {
-  .frame {
-    padding: 56px 48px;
+/* Teléfonos altos: vuelve el texto de apoyo */
+@media (min-height: 820px) {
+  .lead {
+    display: block;
   }
 }
 
-@media (min-width: 900px) {
-  .inner {
-    flex-direction: row;
-    align-items: stretch;
+/* -------------------------------------------------------------------------
+   Tablet (vertical)
+   ------------------------------------------------------------------------- */
+@media (min-width: 600px) {
+  .hud {
+    --hud-top: calc(var(--header-h) + 16px);
+    --hud-side: 18px;
+    --hud-bottom: 40px;
+  }
+
+  .stage .panelWrap {
+    padding-bottom: 22px;
+  }
+
+  .panel {
+    gap: 20px;
+    padding: 30px 32px 24px;
+  }
+
+  .eyebrow {
+    font-size: 0.76rem;
+    margin-bottom: 12px;
+  }
+
+  .title {
+    font-size: clamp(1.7rem, 3.4vw, 2.2rem);
+  }
+
+  .primaryCta,
+  .secondaryCta {
+    padding: 14px 24px;
+    font-size: 13px;
+  }
+
+  .confidential {
+    font-size: 12px;
+  }
+
+  .hero .features {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    padding-block: 40px 16px;
+  }
+
+  .features li {
+    border-bottom: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 20px 0 0;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Escritorio y tablet horizontal: el video ocupa toda la pantalla y el
+   panel flota abajo a la izquierda, dejando el resto del video visible.
+   ------------------------------------------------------------------------- */
+@media (min-width: 960px) {
+  .screen {
+    position: absolute;
+    inset: 0;
+  }
+
+  .stage {
+    justify-content: flex-end;
+    padding-block: calc(var(--header-h) + 64px) 56px;
+  }
+
+  .hud {
+    --hud-top: calc(var(--header-h) + 20px);
+    --hud-side: 28px;
+    --hud-bottom: 28px;
+  }
+
+  .bracket {
+    width: 38px;
+    height: 38px;
+  }
+
+  .bracket[data-pos="tl"] {
+    border-top-left-radius: 16px;
+  }
+  .bracket[data-pos="tr"] {
+    border-top-right-radius: 16px;
+  }
+  .bracket[data-pos="bl"] {
+    border-bottom-left-radius: 16px;
+  }
+  .bracket[data-pos="br"] {
+    border-bottom-right-radius: 16px;
+  }
+
+  .hudTop {
+    top: calc(var(--hud-top) + 14px);
+    left: calc(var(--hud-side) + 20px);
+    right: calc(var(--hud-side) + 20px);
+  }
+
+  .hudMono,
+  .rec {
+    font-size: 13px;
+  }
+
+  /* Etiqueta de escena abajo a la derecha, lejos del panel */
+  .hudBottom {
+    left: auto;
+    right: calc(var(--hud-side) + 20px);
+    bottom: calc(var(--hud-bottom) + 20px);
+    align-items: flex-end;
+  }
+
+  .sceneName {
+    font-size: 13px;
+  }
+
+  .reticle {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    width: 120px;
+    height: 120px;
+    transform: translate(-50%, -50%);
+    animation: reticle-drift 10s ease-in-out infinite;
+  }
+
+  .reticle::before,
+  .reticle::after,
+  .reticle span::before,
+  .reticle span::after {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+  }
+
+  .reticle::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+    border-top-left-radius: 10px;
+  }
+
+  .reticle::after {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+    border-top-right-radius: 10px;
+  }
+
+  .reticle span::before {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+  }
+
+  .reticle span::after {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+    border-bottom-right-radius: 10px;
+  }
+
+  .reticle span {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, var(--color-gold) 0 2.5px, transparent 3px);
+  }
+
+  .stage .panelWrap {
+    margin-top: 0;
+    padding-bottom: 0;
+  }
+
+  .panel {
+    width: min(580px, 56%);
+    min-width: 500px;
+    gap: 20px;
+    padding: 32px 36px 26px;
+    border-radius: 22px;
+    background: rgba(4, 8, 16, 0.84);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .title {
+    font-size: clamp(1.8rem, 2.6vw, 2.35rem);
+  }
+
+  .lead {
+    display: block;
+  }
+
+  .hero .features {
+    padding-block: 44px 20px;
     gap: 40px;
   }
+}
 
-  .frame {
-    flex: 1 1 62%;
+/* Escritorio con poco alto (ej. notebook 1366×768): panel más compacto
+   para que todo quepa sin scroll. */
+@media (min-width: 960px) and (max-height: 760px) {
+  .stage {
+    padding-block: calc(var(--header-h) + 52px) 40px;
   }
 
-  .features {
-    flex: 1 1 34%;
-    align-content: center;
+  .panel {
+    gap: 14px;
+    padding: 24px 30px 20px;
+  }
+
+  .title {
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+  }
+
+  .lead {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin-top: 8px;
+  }
+
+  .primaryCta,
+  .secondaryCta {
+    padding: 12px 20px;
+    font-size: 12px;
+  }
+
+  .panelFoot {
+    padding-top: 12px;
+  }
+
+  .reticle {
+    display: none;
+  }
+}
+
+@media (min-width: 960px) and (max-height: 620px) {
+  .lead {
+    display: none;
+  }
+}
+
+/* Pantallas muy bajas (teléfono en horizontal): se permite que el bloque
+   crezca y se hace scroll, porque no es posible que todo quepa. */
+@media (max-width: 959px) and (max-height: 520px) {
+  .stage {
+    height: auto;
+  }
+
+  .screen {
+    height: 100vh;
+    height: 100svh;
+    flex: none;
+  }
+}
+
+@keyframes reticle-drift {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  30% {
+    transform: translate(-62%, -40%) scale(0.86);
+  }
+  60% {
+    transform: translate(-40%, -58%) scale(1.06);
+  }
+}
+
+@media (min-width: 1280px) {
+  .panel {
+    width: 580px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scanline {
+  .recDot,
+  .reticle,
+  .sceneName {
     animation: none;
-    display: none;
   }
 }

@@ -2,7 +2,8 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(10, 15, 20, 0.55);
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,21 +12,22 @@
 
 .modal {
   width: 100%;
-  max-width: 380px;
-  background: var(--color-white);
-  border-radius: 16px;
-  padding: 28px 26px;
+  max-width: 400px;
+  border-radius: 20px;
+  background: linear-gradient(160deg, #13223b 0%, #0a111e 80%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 28px 26px 24px;
 }
 
 .title {
-  font-size: 1.05rem;
-  color: #14202a;
+  font-size: 1.08rem;
+  color: var(--color-white);
   margin-bottom: 10px;
 }
 
 .message {
   font-size: 0.9rem;
-  color: #64707b;
+  color: #9aa7b8;
   line-height: 1.6;
   margin-bottom: 24px;
 }
@@ -33,34 +35,44 @@
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .cancel,
 .confirm {
   padding: 10px 20px;
+  border: none;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 700;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .cancel {
-  color: #64707b;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .cancel:hover {
-  color: #14202a;
-}
-
-.confirm {
-  background: var(--color-navy);
+  background: rgba(255, 255, 255, 0.14);
   color: var(--color-white);
 }
 
+.confirm {
+  background: var(--color-gold);
+  color: var(--color-black);
+}
+
 .confirm:hover {
-  opacity: 0.9;
+  background: var(--color-gold-dark);
 }
 
 .confirm.danger {
-  background: #a42029;
+  background: #b3262f;
+  color: var(--color-white);
+}
+
+.confirm.danger:hover {
+  background: #8f1d25;
 }

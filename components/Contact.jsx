@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PhoneIcon, LinkedInIcon, ArrowIcon, ShieldIcon } from "./icons/Icons";
 import { addSubmission } from "@/lib/submissionsStore";
+import { MAIN_SERVICE, FEATURED_SERVICES, OTHER_SERVICES } from "@/lib/services";
 import styles from "./Contact.module.css";
 
 const PHONE_DISPLAY = "+56 9 7644 7389";
@@ -10,19 +11,12 @@ const PHONE_HREF = "tel:+56976447389";
 const LINKEDIN_URL = "https://www.linkedin.com/in/vestigadoresprivadoschile/";
 
 const SERVICE_OPTIONS = [
-  "Vigilancias especiales",
-  "Búsqueda de vehículos",
-  "Levantamiento de evidencias",
-  "Localización de personas",
-  "Apoyo a receptores judiciales",
-  "Seguimiento de redes sociales",
-  "ADN por paternidad",
-  "Detección de falsificaciones",
-  "Infidelidades / amistades furtivas",
-  "Control de pérdidas",
+  MAIN_SERVICE.title,
+  ...FEATURED_SERVICES.map((s) => s.title),
+  ...OTHER_SERVICES.map((s) => s.title),
   "Evaluaciones prenupciales",
   "Otro",
-];
+].filter((v, i, arr) => arr.indexOf(v) === i);
 
 const EMPTY_FORM = { name: "", email: "", phone: "", service: "", message: "" };
 
@@ -63,8 +57,8 @@ export default function Contact() {
             <p className="eyebrow">Formulario reservado</p>
             <h2 className={styles.formTitle}>Cuéntenos su caso</h2>
             <p className={styles.formLead}>
-              La información enviada aquí es tratada con reserva absoluta por
-              nuestro equipo.
+              Todo contacto y contratación es 100% confidencial: la información
+              enviada aquí solo la conoce nuestro equipo.
             </p>
 
             {sent ? (

@@ -13,13 +13,13 @@ const ITEMS = [
     href: "/servicios",
     icon: SurveillanceIcon,
     title: "Servicios",
-    text: "Las 10 áreas de investigación que cubrimos en todo Chile.",
+    text: "Información y evidencias, infidelidades, fraudes, due diligence, herencias y más.",
   },
   {
     href: "/contacto",
     icon: PhoneIcon,
     title: "Contacto",
-    text: "Coordine una consulta reservada con nuestro equipo.",
+    text: "Consulta y contratación 100% confidencial.",
   },
 ];
 

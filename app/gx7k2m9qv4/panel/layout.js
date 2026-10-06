@@ -7,10 +7,11 @@ import { usePathname, useRouter } from "next/navigation";
 import styles from "./panel.module.css";
 import { logout, isAuthenticated } from "@/lib/adminAuth";
 import { getUnreadCount } from "@/lib/submissionsStore";
+import { ADMIN_BASE, ADMIN_PANEL, ADMIN_FORMS } from "@/lib/adminConfig";
 
 const NAV = [
-  { href: "/administrar/panel", label: "Resumen" },
-  { href: "/administrar/panel/formularios", label: "Formularios" },
+  { href: ADMIN_PANEL, label: "Resumen" },
+  { href: ADMIN_FORMS, label: "Formularios" },
 ];
 
 // Maqueta sin backend: la protección de esta sección se verifica en el
@@ -30,7 +31,7 @@ export default function PanelLayout({ children }) {
     isAuthenticated().then((authed) => {
       if (!active) return;
       if (!authed) {
-        router.replace("/administrar");
+        router.replace(ADMIN_BASE);
         return;
       }
       setChecked(true);
@@ -50,7 +51,7 @@ export default function PanelLayout({ children }) {
 
   async function handleLogout() {
     await logout();
-    router.push("/administrar");
+    router.push(ADMIN_BASE);
   }
 
   if (!checked) return null;
@@ -68,7 +69,7 @@ export default function PanelLayout({ children }) {
         <nav className={styles.nav}>
           {NAV.map((item) => {
             const active =
-              item.href === "/administrar/panel"
+              item.href === ADMIN_PANEL
                 ? pathname === item.href
                 : pathname.startsWith(item.href);
             return (

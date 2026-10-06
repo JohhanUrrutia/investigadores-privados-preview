@@ -72,3 +72,31 @@
 .card:hover .icon {
   transform: translate(3px, -3px);
 }
+
+/* -------- Variante destacada: fondo azul, ícono dorado -------- */
+.featured {
+  border: none;
+  background: linear-gradient(170deg, #10233f 0%, var(--color-black) 100%);
+}
+
+.featured::before {
+  transform: scaleX(0.18);
+}
+
+.featured .icon {
+  color: var(--color-gold);
+}
+
+.featured .title {
+  font-size: 17px;
+}
+
+.featured:hover {
+  background: var(--color-navy);
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 34px 28px;
+  }
+}

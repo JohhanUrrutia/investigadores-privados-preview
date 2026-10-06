@@ -1,5 +1,4 @@
 import { DM_Sans } from "next/font/google";
-import SiteChrome from "@/components/SiteChrome";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -13,14 +12,14 @@ export const metadata = {
     template: "%s | Investigadores Privados Chile",
   },
   description:
-    "Agencia especialista en la gestión y búsqueda de información y evidencias en todo Chile y el extranjero. Vigilancias, búsqueda de vehículos, levantamiento de evidencias, localización de personas, apoyo a receptores judiciales y más.",
+    "Agencia especialista en la búsqueda de información y evidencias sobre conductas familiares, personales, laborales y comerciales en Santiago, regiones y el extranjero. Infidelidades, localización de personas, fraudes, due diligence, herencias y más. Todo contacto y contratación es confidencial.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="es" className={dmSans.variable}>
       <body>
-        <SiteChrome>{children}</SiteChrome>
+        {children}
       </body>
     </html>
   );
